@@ -1,5 +1,6 @@
 # 必要なライブラリを読み込む
 import discord
+from discord import channel
 import psutil
 import random
 import string
@@ -7,6 +8,7 @@ import asyncio
 import youtube_dl
 import os
 import glob
+import config
 
 # YouTube DLの処理 (触らない方が無難)
 # Suppress noise about console usage from errors
@@ -206,7 +208,8 @@ async def on_message(message):
 # 新入
 @client.event
 async def on_member_join(member):
-    await member.channel.send('ようこそサーバーへ!')
+    channel = client.get_channel(config.JOIN_CHANNEL_ID)
+    await channel.send(f'{member.mention}\nようこそサーバーへ!')
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)

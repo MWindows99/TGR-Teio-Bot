@@ -8,7 +8,7 @@ import emoji
 def remove_emoji(src_str):
     return ''.join(c for c in src_str if c not in emoji.UNICODE_EMOJI)
 
-# APIキー設定(別ファイルのconfig.pyで定義しています)
+# APIキー設定
 CK = config.CONSUMER_KEY
 CS = config.CONSUMER_SECRET
 AT = config.ACCESS_TOKEN
@@ -21,7 +21,7 @@ twitter = OAuth1Session(CK, CS, AT, ATS)
 url = "https://api.twitter.com/1.1/statuses/user_timeline.json"  
 
 # パラメータの定義
-params = {'screen_name': 'MWindows99',
+params = {'screen_name': 'USERID',
           'exclude_replies': True,
           'include_rts': False,
           'count': 200}

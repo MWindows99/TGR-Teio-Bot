@@ -1,6 +1,11 @@
 # TGR-Chino-Bot
 要望があったので追加しました。機能は色々あるので必要なライブラリは多めです。全部入れてから使ってください。
 
+# 追記
+A new version of the file was merged because a bug was found in bot.py.
+
+Contributor:[TaiyoMizuoka](https://github.com/TaiyoMizuoka)
+
 # Font (License)
 This program contains the following fonts. 
  ## Ricty Diminished

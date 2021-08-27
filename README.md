@@ -4,7 +4,7 @@
 # 追記
 I merged the bot.py because a bug was found in it.
 
-Contributor: Mizusyan
+Contributor: [Mizusyan](https://github.com/MizuokaDev)
 
 # Font (License)
 This program contains the following fonts. 

@@ -3,4 +3,6 @@
 
 # 必要なライブラリ
 ## discord.py
-## 
+## psutil
+## youtube_dl
+## wordcloud

@@ -2,7 +2,7 @@
 要望があったので追加しました。機能は色々あるので必要なライブラリは多めです。全部入れてから使ってください。
 
 # 追記
-A new version of the file was merged because a bug was found in bot.py.
+I merged the bot.py because a bug was found in it.
 
 Contributor:[TaiyoMizuoka](https://github.com/TaiyoMizuoka)
 

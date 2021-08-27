@@ -4,7 +4,7 @@
 # 必要なライブラリ
 
 WordCloud使わない場合は上3つを入れれば動きます。
-## discord.py
+## discord.py (VC機能付き)
      pip3 install discord.py[voice]
 ## psutil
      pip3 install psutil

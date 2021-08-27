@@ -1,6 +1,13 @@
 # TGR-Chino-Bot
 要望があったので追加しました。機能は色々あるので必要なライブラリは多めです。全部入れてから使ってください。
 
+# Font (License)
+This program contains the following fonts. 
+ ## Ricty Diminished
+ 1. Watch with [GitHub](https://github.com/edihbrandon/RictyDiminished).
+ 
+ 2. Watch [License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=ofl).
+
 # 必要なライブラリ
 
 WordCloud使わない場合は上3つを入れれば動きます。
@@ -23,7 +30,7 @@ WordCloud使わない場合は上3つを入れれば動きます。
      
 # 実行前に
 bot.pyの指定された場所にBotトークンを入力してください。
-WordCloudを使う場合は
+WordCloudを使う場合は""
 
 # 実行方法
     sh startbot.sh

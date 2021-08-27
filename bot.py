@@ -1,5 +1,6 @@
 # 必要なライブラリを読み込む
 import discord
+from discord import channel
 import psutil
 import random
 import string
@@ -7,6 +8,7 @@ import asyncio
 import youtube_dl
 import os
 import glob
+import config
 
 # YouTube DLの処理 (触らない方が無難)
 # Suppress noise about console usage from errors
@@ -84,17 +86,18 @@ async def reply(message):
 # メッセージ受信時に動作する処理
 @client.event
 async def on_message(message):
-  
+
+    split_commend = str(message.content)
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
         return
       
     # 発言に反応(例)
-    if message.content == '/heyguys':
+    if split_commend[0] == '/heyguys':
         await message.channel.send('Hey guys, we have gift for you.')
 
     # ここからVC制御をする
-    elif message.content == "!join":
+    elif split_commend[0] == "!join":
         if message.author.voice is None:
             await message.channel.send("ERROR!_あなたがボイスチャンネルに接続していません!ボイスチャンネルに接続してください。")
             return
@@ -102,7 +105,7 @@ async def on_message(message):
         await message.author.voice.channel.connect()
         await message.channel.send("Success!_接続しました。")
 
-    elif message.content == "!leave":
+    elif split_commend[0] == "!leave":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
@@ -118,7 +121,7 @@ async def on_message(message):
         if message.guild.voice_client.is_playing():
             await message.channel.send("ERROR!_再生中です。")
             return
-        url = message.content[6:]
+        url = split_commend[1]
         # プレイヤー処理
         # ↓loop=client.loop のあとに stream=True を追加するとストリー厶になる(=ダウンロードされなくなる)
         player = await YTDLSource.from_url(url, loop=client.loop)
@@ -126,14 +129,14 @@ async def on_message(message):
         message.guild.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await message.channel.send('PLAY_{0} を再生します。'.format(player.title))
 
-    elif message.content == "!pause":
+    elif split_commend[0] == "!pause":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
         message.guild.voice_client.pause()
         await message.channel.send('Paused.')
 
-    elif message.content == "!stop":
+    elif split_commend[0] == "!stop":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
@@ -144,7 +147,7 @@ async def on_message(message):
         await message.channel.send('Stopped.')
 
     # Streamの場合は不要
-    elif message.content == '/clean':
+    elif split_commend[0] == '/clean':
         # webmファイルがあれば削除
         file_list = glob.glob("*.webm")
         for file in file_list:
@@ -163,18 +166,18 @@ async def on_message(message):
     elif client.user in message.mentions: # 話しかけられたかの判定
         await reply(message) # 返信する非同期関数を実行
 
-    elif message.content == '/star':
+    elif split_commend[0] == '/star':
         await message.channel.send('スター氏はTGR Groupのイケメン社長です。')
 
-    elif message.content == '/laddge':
+    elif split_commend[0] == '/laddge':
         await message.channel.send('Laddge君はイケメンです。レッツノートが大好きです。')
         
     # リアクションさせる、絵文字は上部で読み込んである (Unicode)
-    elif message.content == 'しんきんぐ':
+    elif split_commend[0] == 'しんきんぐ':
         await message.add_reaction(UnicodeEmoji)
 
     # サーバー情報をおしえてくれる(便利)
-    elif message.content == '/serverinfo':
+    elif split_commend[0] == '/serverinfo':
         # サーバー情報を取得する
         cpu = psutil.cpu_percent(interval=1)
         mem = psutil.virtual_memory()
@@ -183,7 +186,7 @@ async def on_message(message):
         dsk2 = dsk.percent
         await message.channel.send('【サーバー情報】CPU使用率:' + str(cpu) + '%、メモリー使用率:' + str(mem2) + '%、ディスク使用率:' + str(dsk2) + '%')
 
-    elif message.content == '/wc':
+    elif split_commend[0] == '/wc':
         # APIの制限回避のため実行権限を管理者のみ
         if message.author.guild_permissions.administrator:
             import mainrun
@@ -192,20 +195,21 @@ async def on_message(message):
         else:
             await message.channel.send('Error:管理者以外実行できません。')
 
-    elif message.content == '/random':
+    elif split_commend[0] == '/random':
         letters = string.ascii_lowercase
         result_str = ''.join(random.choice(letters) for i in range(10))
         await message.channel.send('Random Password: ' + str(result_str))
 
     # everyoneメンションのみブロック(含む場合無視)
-    elif message.content == '@everyone':
+    elif split_commend[0] == '@everyone':
         await message.delete()
         await message.channel.send('BLOCKED! everyoneメンションは禁止です。')
 
 # 新入
 @client.event
 async def on_member_join(member):
-    await message.channel.send('ようこそサーバーへ!')
+    channel = client.get_channel(config.JOIN_CHANNEL_ID)
+    await channel.send(f'{member.mention}\nようこそサーバーへ!')
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)

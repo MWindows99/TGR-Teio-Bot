@@ -11,6 +11,7 @@ This program contains the following fonts.
 # 必要なライブラリ
 
 WordCloud使わない場合は上3つを入れれば動きます。
+
 ## discord.py (VC機能付き)
      pip3 install discord.py[voice]
 ## psutil
@@ -30,7 +31,11 @@ WordCloud使わない場合は上3つを入れれば動きます。
      
 # 実行前に
 bot.pyの指定された場所にBotトークンを入力してください。
-WordCloudを使う場合は""
+
+WordCloudを使う場合は↓
+
+1. Twitter API Keyを"config.py"に入れる。
+2. Twitter User IDを"gettimeline.py"に入れる。
 
 # 実行方法
     sh startbot.sh
@@ -41,3 +46,24 @@ WordCloudを使う場合は""
     sh exitbot.sh
 ## 2. PIDが表示されるので以下の様にコマンドを実行
     kill {PID}
+
+# 利用可能なコマンド
+
+### /wc
+WordCloudを生成する。実行から返信まで20〜30秒遅延あり。
+### /serverinfo
+サーバー情報を表示する
+### !join
+VCに接続する
+### !leave
+VCから切断する
+### !play URL
+Youtubeの動画の曲を再生する。(YouTube利用規約に従うこと。私は責任を負わない。)
+### !stop
+Youtubeの動画の曲の再生を停止する。
+### !pause
+Youtubeの動画の曲の再生をポーズする。(開始方法なしのため!stopと同じ)
+### しんきんぐ
+顔文字でリアクションする
+### その他諸々
+…

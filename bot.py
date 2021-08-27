@@ -205,7 +205,7 @@ async def on_message(message):
 # 新入
 @client.event
 async def on_member_join(member):
-    await message.channel.send('ようこそTサーバーへ!')
+    await message.channel.send('ようこそサーバーへ!')
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)

@@ -20,3 +20,17 @@ WordCloud使わない場合は上3つを入れれば動きます。
      pip3 install emoji --upgrade
 ## tweepy
      pip3 install tweepy
+     
+# 実行前に
+bot.pyの指定された場所にBotトークンを入力してください。
+WordCloudを使う場合は
+
+# 実行方法
+    sh startbot.sh
+
+バックグラウンドで動きます。SSHを切断しても動くおまじないがかけてあります。
+# 終了方法
+## 1. exitbot.shを実行
+    sh exitbot.sh
+## 2. PIDが表示されるので以下の様にコマンドを実行
+    kill {PID}

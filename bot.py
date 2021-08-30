@@ -97,7 +97,7 @@ async def on_message(message):
         await message.channel.send('Hey guys, we have gift for you.')
 
     # ここからVC制御をする
-    elif split_commend[0] == "!join":
+    elif split_commend[0] == "/join":
         if message.author.voice is None:
             await message.channel.send("ERROR!_あなたがボイスチャンネルに接続していません!ボイスチャンネルに接続してください。")
             return
@@ -105,7 +105,7 @@ async def on_message(message):
         await message.author.voice.channel.connect()
         await message.channel.send("Success!_接続しました。")
 
-    elif split_commend[0] == "!leave":
+    elif split_commend[0] == "/leave":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
@@ -113,7 +113,7 @@ async def on_message(message):
         await message.guild.voice_client.disconnect()
         await message.channel.send("Success!_切断しました。")
 
-    elif message.content.startswith("!play "):
+    elif message.content.startswith("/play "):
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
@@ -129,14 +129,14 @@ async def on_message(message):
         message.guild.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await message.channel.send('PLAY_{0} を再生します。'.format(player.title))
 
-    elif split_commend[0] == "!pause":
+    elif split_commend[0] == "/pause":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
         message.guild.voice_client.pause()
         await message.channel.send('Paused.')
 
-    elif split_commend[0] == "!stop":
+    elif split_commend[0] == "/stop":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return

@@ -2,7 +2,8 @@
 要望があったので追加しました。機能は色々あるので必要なライブラリは多めです。全部入れてから使ってください。
 
 # 追記
-I merged the bot.py because a bug was found in it.
+1. I merged the bot.py because a bug was found in it.
+2. Change prefix of all commands to "/".
 
 Contributor: [Mizusyan](https://github.com/MizuokaDev)
 

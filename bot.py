@@ -59,8 +59,9 @@ class YTDLSource(discord.PCMVolumeTransformer):
 # Botのアクセストークン
 TOKEN = 'DISCORDのサイトから取れる'
 
-# 接続に必要なオブジェクトを生成
-client = discord.Client()
+# 接続に必要なオブジェクトを生成(引数のあるコマンドの実装はclient.command()使った方が楽よ←)
+#プレフィックスの定義
+client = commands.Bot(command_prefix='!')
 
 # Thinking絵文字の読み込み(適当)
 UnicodeEmoji ="\N{Thinking Face}"
@@ -83,21 +84,47 @@ async def reply(message):
     reply = f'{message.author.mention} ' # 返信メッセージの作成
     await message.channel.send(reply + msgcont) # 返信メッセージを送信
 
+#おまけにアンケ機能おいとく
+@client.command()
+async def poll(ctx, about = "question", *args):
+    emojis = ["1⃣","2⃣","3⃣","4⃣"]
+
+    cnt = len(args)
+    message = discord.Embed(title=":speech_balloon: "+about,color=discord.Colour.from_rgb(255,138,203))
+    if cnt <= len(emojis):
+        for a in range(cnt):
+            message.add_field(name=f'{emojis[a]}{args[a]}', value="** **", inline=False)
+        msg = await ctx.send(embed=message)
+        #投票の欄
+        for i in range(cnt):
+            await msg.add_reaction(emojis[i])
+    else:
+        await ctx.send("投票選択可能項目の限度数は4以下です")
+    
 # メッセージ受信時に動作する処理
 @client.event
 async def on_message(message):
 
-    split_commend = str(message.content)
+    #split_commend = str(message.content)
+    
+    #botは無視とか
+    def check(msg):
+        return msg.author == message.author
+
+    #bot以外だったらsplit_commendに
+    wait_msg = await client.wait_for("message", check=check)
+    split_commend = wait_msg.content
+    
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
         return
       
     # 発言に反応(例)
-    if split_commend[0] == '/heyguys':
+    if split_commend == '/heyguys':
         await message.channel.send('Hey guys, we have gift for you.')
 
     # ここからVC制御をする
-    elif split_commend[0] == "/join":
+    elif split_commend == "/join":
         if message.author.voice is None:
             await message.channel.send("ERROR!_あなたがボイスチャンネルに接続していません!ボイスチャンネルに接続してください。")
             return
@@ -105,7 +132,7 @@ async def on_message(message):
         await message.author.voice.channel.connect()
         await message.channel.send("Success!_接続しました。")
 
-    elif split_commend[0] == "/leave":
+    elif split_commend == "/leave":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
@@ -129,14 +156,14 @@ async def on_message(message):
         message.guild.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await message.channel.send('PLAY_{0} を再生します。'.format(player.title))
 
-    elif split_commend[0] == "/pause":
+    elif split_commend == "/pause":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
         message.guild.voice_client.pause()
         await message.channel.send('Paused.')
 
-    elif split_commend[0] == "/stop":
+    elif split_commend == "/stop":
         if message.guild.voice_client is None:
             await message.channel.send("ERROR!_ボイスチャンネルに接続していません!")
             return
@@ -147,7 +174,7 @@ async def on_message(message):
         await message.channel.send('Stopped.')
 
     # Streamの場合は不要
-    elif split_commend[0] == '/clean':
+    elif split_commend == '/clean':
         # webmファイルがあれば削除
         file_list = glob.glob("*.webm")
         for file in file_list:
@@ -166,18 +193,18 @@ async def on_message(message):
     elif client.user in message.mentions: # 話しかけられたかの判定
         await reply(message) # 返信する非同期関数を実行
 
-    elif split_commend[0] == '/star':
+    elif split_commend == '/star':
         await message.channel.send('スター氏はTGR Groupのイケメン社長です。')
 
-    elif split_commend[0] == '/laddge':
+    elif split_commend == '/laddge':
         await message.channel.send('Laddge君はイケメンです。レッツノートが大好きです。')
         
     # リアクションさせる、絵文字は上部で読み込んである (Unicode)
-    elif split_commend[0] == 'しんきんぐ':
+    elif split_commend == 'しんきんぐ':
         await message.add_reaction(UnicodeEmoji)
 
     # サーバー情報をおしえてくれる(便利)
-    elif split_commend[0] == '/serverinfo':
+    elif split_commend == '/serverinfo':
         # サーバー情報を取得する
         cpu = psutil.cpu_percent(interval=1)
         mem = psutil.virtual_memory()
@@ -186,7 +213,7 @@ async def on_message(message):
         dsk2 = dsk.percent
         await message.channel.send('【サーバー情報】CPU使用率:' + str(cpu) + '%、メモリー使用率:' + str(mem2) + '%、ディスク使用率:' + str(dsk2) + '%')
 
-    elif split_commend[0] == '/wc':
+    elif split_commend == '/wc':
         # APIの制限回避のため実行権限を管理者のみ
         if message.author.guild_permissions.administrator:
             import mainrun
@@ -195,13 +222,13 @@ async def on_message(message):
         else:
             await message.channel.send('Error:管理者以外実行できません。')
 
-    elif split_commend[0] == '/random':
+    elif split_commend == '/random':
         letters = string.ascii_lowercase
         result_str = ''.join(random.choice(letters) for i in range(10))
         await message.channel.send('Random Password: ' + str(result_str))
 
     # everyoneメンションのみブロック(含む場合無視)
-    elif split_commend[0] == '@everyone':
+    elif split_commend == '@everyone':
         await message.delete()
         await message.channel.send('BLOCKED! everyoneメンションは禁止です。')
 

@@ -5,8 +5,9 @@
 1. I merged the bot.py because a bug was found in it.
 2. Change prefix of all commands to "/".
 
-Contributor: [Mizusyan](https://github.com/MizuokaDev)
-             [yu___ri2006](https://github.com/yu-ri2006)
+Contributors:
+ - [Mizusyan](https://github.com/MizuokaDev)
+ - [yu___ri2006](https://github.com/yu-ri2006)
 
 # 注意
 Discord.pyのサポートは終了しているのでいつまで使えるのかはわかりません。

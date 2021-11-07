@@ -7,6 +7,9 @@
 
 Contributor: [Mizusyan](https://github.com/MizuokaDev)
 
+# 注意
+Discord.pyのサポートは終了しているのでいつまで使えるのかはわかりません。
+
 # Font (License)
 This program contains the following fonts. 
  ## Ricty Diminished

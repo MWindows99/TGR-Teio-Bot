@@ -1,4 +1,4 @@
-# TGR-Chino-Bot
+# TGR-Teio-Bot
 要望があったので追加しました。機能は色々あるので必要なライブラリは多めです。全部入れてから使ってください。
 
 # 追記
@@ -11,7 +11,7 @@ Contributors:
 
 # 注意
 1. Discord.pyのサポートは終了しているのでいつまで使えるのかはわかりません。
-2. WordCloudの機能に不具合を見つけた気がするのですが、直してないです。
+2. WordCloudの機能に不具合を見つけた気がするのですが、直してないです。importのあたりをリロードしてください。
 
 # Font (License)
 This program contains the following fonts. 

@@ -38,6 +38,8 @@ WordCloud使わない場合は上3つを入れれば動きます。
      pip3 install wordcloud
 ## emoji lib
      pip3 install emoji --upgrade
+## beautifulsoup
+     pip3 install bs4
 ## tweepy
      pip3 install tweepy
      
